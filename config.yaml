@@ -1,22 +1,21 @@
 baseURL: https://dariagneusheva.netlify.app/
 languageCode: en-us
-title: Forty
+title: Daria
 theme: forty
 googleAnalytics: ''
 disqusShortname: ''
 params:
   banner:
-    buttonText: Get Started
+    buttonText: Discover 
     subtitle: |-
-      A RESPONSIVE SITE TEMPLATE DESIGNED BY HTML5 UP
-      AND RELEASED UNDER THE CREATIVE COMMONS.
-    title: Hi, my name is Daria
-  blog: {}
+      Data Science meets R: learn with me step-by-step & enjoy the process
+    title: Daria Gneusheva
+    blog: {}
   contact:
     address:
-      - city: City, ST 00000
-        country: Country
-        street: Street
+      - city: London
+        country: UK
+        street: Mallory St.
         title: Address
     buttonClear: Clear
     buttonSend: Send message
@@ -25,7 +24,7 @@ params:
         title: Email
     enable: yes
     phone:
-      - phone: (000) 000-0000 x1234
+      - phone: (07) 501-659-180
         title: Phone
   custom_css: []
   custom_js: []
@@ -35,30 +34,24 @@ params:
     text: Please visit [this page](/)
   favicon: favicon.ico
   footer:
-    copyright: Company Name
+    copyright: Daria Gneusheva
     enable: yes
     quicklinks:
       - alt: HTML5 UP
         text: 'Design: '
         url: https://www.html5up.net
     social:
-      - icon: fa-twitter
-        label: Twitter
-        url: https://www.twitter.com
-      - icon: fa-facebook
-        label: Facebook
-        url: https://www.facebook.com
       - icon: fa-instagram
         label: Instagram
-        url: https://www.instagram.com
+        url: https://www.instagram.com/daria_gneusheva/
       - icon: fa-github
         label: GitHub
-        url: https://www.github.com
+        url: https://github.com/DariaGneusheva
       - icon: fa-linkedin
         label: LinkedIn
-        url: https://www.linkedin.com
+        url: https://www.linkedin.com/in/dgneusheva/
   image: ''
-  name: Your name
+  name: Daria
   navigation:
     button1:
       - name: Get Started
@@ -71,48 +64,32 @@ params:
         url: '#'
       - name: Blogs
         url: blogs
-      - name: Generic Blog
-        url: blogs/ipsum
-      - name: Elements
-        url: elements.html
     menu: Menu
-    subtitle: By HTML5 Up
-    title: Forty
+    subtitle: ""
+    title: Learn R
   tiles:
     enable: yes
     showcase:
-      - image: pic01.jpg
-        subtitle: Ipsum Dolor Sit Amet
-        title: Aliquam
-        url: blogs/aliquam
-      - image: pic02.jpg
-        subtitle: Feugiat Amet Tempus
-        title: Tempus
-        url: blogs/tempus
-      - image: pic03.jpg
-        subtitle: Lorem Etiam Nullam
-        title: Magna
+      - image: data_analysis.jpeg
+        subtitle: Intermediate Level
+        title: Spielberg vs Burton - who is better?
+        url: blogs/ipsum
+      - image: omega.jpeg
+        subtitle: Intermediate Level
+        title: Gender Pay Gap at Omega - unjustified?
         url: blogs/magna
+      - image: climate_change.jpg
+        subtitle: Beginner-friendly Level
+        title: Believing in Global Warming - does it depend on your political views? 
+        url: blogs/tempus
       - image: pic04.jpg
-        subtitle: Nisl Sed Aliquam
-        title: Ipsum
-        url: blogs/ipsum
-      - image: pic05.jpg
-        subtitle: Ipsum Dolor Sit Amet
-        title: Consequat
-        url: blogs/ipsum
-      - image: pic06.jpg
-        subtitle: Feugiat Amet Tempus
-        title: Etiam
-        url: blogs/ipsum
+        subtitle: Beginner-friendly Level
+        title: Where Do People Drink The Most Beer, Wine And Spirits?
+        url: blogs/aliquam
+
   two:
     buttonText: Get Started
     enable: yes
-    subtitle: "Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero.
-      \n    Mauris aliquet magna magna sed nunc rhoncus pharetra. \n    Pellentesque
-      condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia
-      pellentesque lorem ipsum dolor. \n    Nullam et orci eu lorem consequat tincidunt.
-      Vivamus et sagittis libero.\n    Mauris aliquet magna magna sed nunc rhoncus
-      amet pharetra et feugiat tempus."
-    title: Massa libero
+    subtitle: "Learning R doesn't have to be boring and time-consuming. I will walk you step-by-step through diverse real-life and fictional stories, searching for simple answers to complicated problems. Click the button below to explore more content."
+    title: Explore more
     url: blogs

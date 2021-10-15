@@ -5,10 +5,151 @@ categories:
 date: "2017-10-31T21:28:43-05:00"
 description: ""
 draft: false
-image: pic10.jpg
+image: data_analysis.jpeg
 keywords: ""
 slug: ipsum
-title: Ipsum
+title: Spielberg vs Burton - who is better?
 ---
 
-Nullam et orci eu lorem consequat tincidunt vivamus et sagittis magna sed nunc rhoncus condimentum sem. In efficitur ligula tate urna. Maecenas massa sed magna lacinia magna pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis tempus.
+Today we will explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not. We already have calculated confidence intervals for the mean ratings of these two directors and they overlap.
+
+
+```{r directors, echo=FALSE, out.width="100%"}
+knitr::include_graphics(here::here("images", "directors.png"), error = FALSE)
+```
+
+First, we will reproduce this graph.
+
+In addition, we will run a hypothesis test. We will use both the `t.test` command and the `infer` package to simulate from a null distribution, where we assume zero difference between the two.
+
+First, we define our null and alternative hypothesis. Our null hypothesis is that Steven Spielberg and Tim Burton have the same mean IMDB ratings, and our alternative hypothesis is that they do not have the same mean IMDB rating. 
+
+We load the data and examine its structure:
+
+```{r load-movies-data}
+movies <- read_csv(here::here("data", "movies.csv"))
+glimpse(movies)
+```
+
+In the next step, we will reproduce the graph:
+
+```{r}
+
+# We create a new dataframe that only includes the ratings of Steven Spielberg and Tim Burton
+movies_rating <- movies %>% 
+  group_by(director) %>%
+  filter(director %in% c("Steven Spielberg","Tim Burton")) %>% 
+  #Only keep the raiting column
+  select(rating)
+
+# Next, we calculate the confidence intervals of the mean ratings of the two directors  
+movies_interval <- movies_rating %>% 
+  summarise(n = n(),
+            mean_rating = mean(rating, na.rm = TRUE),
+         se = sd(rating, na.rm=TRUE)/sqrt(n),
+         lower = mean_rating - 1.96*se,
+         upper = mean_rating + 1.96*se) %>% 
+  mutate(director = fct_reorder(director, desc(c("Steven Spielberg","Tim Burton")))) 
+       
+movies_interval
+```
+
+```{r, fig.height=10, fig.width= 15}
+
+ggplot(movies_interval, aes(x=mean_rating)) +
+  geom_errorbar(aes(xmin=lower,
+                xmax=upper,
+                y=director, 
+                color=director), 
+                width=0.1, 
+                size=2 ) +
+  geom_point(mapping=aes(x=mean_rating, y=director, color=director,fill=director), size=4, shape=21) +
+  geom_text(aes(y=director,label=round(mean_rating, digits=2)),
+            vjust = 0, 
+            nudge_y = 0.1,
+            size = 6) +
+  geom_text(aes(y=director,label=round(lower, digits=2)),
+            vjust = 0, 
+            nudge_x = -0.29,
+            nudge_y = 0.1,
+            size = 5) +
+  geom_text(aes(y=director,label=round(upper, digits=2)),
+            vjust = 0, 
+            nudge_x = 0.29,
+            nudge_y = 0.1,
+            size = 5) +
+  scale_color_manual(values = c("Tim Burton" = "lightseagreen", "Steven Spielberg" = "salmon")) +
+  scale_fill_manual(values = c("Tim Burton" = "lightseagreen", "Steven Spielberg" = "salmon")) +
+  geom_rect(aes(xmin=7.29,
+                xmax=7.30,
+                ymin=-Inf,
+                ymax=Inf),
+                fill="light grey",
+                alpha=0.5) +
+  theme_bw() +
+  theme(legend.position = "none") +
+  labs(title = "Do Spielberg and Burton have the same mean IMDB ratings?",
+      subtitle = "95% Confidence Intervals overlap",
+      y = "",
+      x = "Mean IMDB Rating") +
+  scale_x_continuous(breaks = seq(6.5, 8.5, by = 0.5))
+```
+Next, we will conduct a t-test to verify our hypothesis:
+
+```{r}
+t.test( rating ~ director, data = movies_rating)
+
+```
+> Despite the overlapping confidence intervals, our t-test shows that we reject the null-hypothesis at the 5% level (p-value < 0.05); therefore, we reject the hypothesis that Steven Spielberg and Tim Burton have the same mean ratings.
+
+
+Next, we will perform the hypothesis analysis using the "infer package". First, we  initialize the test, which we save as `obs_diff`:
+
+```{r}
+obs_diff <- movies_rating %>%
+  specify(rating ~ director) %>%
+  calculate(stat = "diff in means", order = c("Steven Spielberg", "Tim Burton"))
+```
+
+Next, we simulate the test on the null distribution, which we save as null. We also plot our distribution:
+
+```{r, fig.width= 7, fig.height = 5}
+null_dist <- movies_rating %>%
+  # specify variables
+  specify(rating ~ director) %>%
+  
+  # assume independence, i.e, there is no difference
+  hypothesize(null = "independence") %>%
+  
+  # generate 1000 reps, of type "permute"
+  generate(reps = 1000, type = "permute") %>%
+  
+  # calculate statistic of difference, namely "diff in means"
+  calculate(stat = "diff in means", order = c("Steven Spielberg", "Tim Burton"))
+
+ggplot(data = null_dist, aes(x = stat)) +
+  geom_histogram(color = "black")+
+  labs(
+        title = "Distribution of Difference in Mean Ratings",
+        subtitle = "between Steven Spielberg and Tim Burton",
+        x = "Difference in Mean Ratings",
+        y = "Count"
+  )
+```
+
+Finally, we will visualize to see how many of the null permutations have a difference of at least obs_stat` of `r obs_diff %>% pull() %>% round(2)` and will compute a p-value.
+
+```{r, fig.width= 7, fig.height = 5}
+null_dist %>% visualize() +
+  shade_p_value(obs_stat = obs_diff, direction = "two-sided")+
+   labs(
+       x = "Difference in Mean Ratings",
+       y = "Count"
+  )
+
+null_dist %>%
+  get_p_value(obs_stat = obs_diff, direction = "two_sided")
+ 
+```
+
+> Looking at the simulation-based distribution, our p-value is still very small (0.006 < 0.05), which confirms that we should reject our null hypothesis: Steven Spielberg and Tim Burton do not have same mean IMDB ratings.

@@ -1,9 +1,9 @@
 ---
-date: "2017-10-31T22:27:21-05:00"
+date: "2021-09-05T22:27:21-05:00"
 draft: false
 image: pic02.jpg
 slug: blogs
-title: Lifestyle
+title: Data Analysis
 ---
 
-My blogs about technology and lifestyle.
+My blogs about handling data in R.
