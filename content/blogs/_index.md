@@ -1,9 +1,9 @@
 ---
 date: "2021-09-05T22:27:21-05:00"
 draft: false
-image: pic02.jpg
+image: banner.jpg
 slug: blogs
-title: Data Analysis
+title: R in details
 ---
 
-My blogs about handling data in R.
+Extensive examples for beginners & more advanced levels.
