@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Forty</title>
+    <title>Daria</title>
     <link>https://dariagneusheva.netlify.app/</link>
-    <description>Recent content on Forty</description>
+    <description>Recent content on Daria</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 01 Dec 2020 21:13:14 -0500</lastBuildDate><atom:link href="https://dariagneusheva.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 05 Sep 2021 22:27:21 -0500</lastBuildDate><atom:link href="https://dariagneusheva.netlify.app/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Hello R Markdown</title>
       <link>https://dariagneusheva.netlify.app/post/2020-12-01-r-rmarkdown/</link>
@@ -19,39 +19,44 @@ summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
     </item>
     
     <item>
-      <title>Aliquam</title>
-      <link>https://dariagneusheva.netlify.app/blogs/aliquam/</link>
-      <pubDate>Tue, 31 Oct 2017 22:42:51 -0500</pubDate>
-      
-      <guid>https://dariagneusheva.netlify.app/blogs/aliquam/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Tempus</title>
-      <link>https://dariagneusheva.netlify.app/blogs/tempus/</link>
-      <pubDate>Tue, 31 Oct 2017 22:26:13 -0500</pubDate>
-      
-      <guid>https://dariagneusheva.netlify.app/blogs/tempus/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Magna</title>
-      <link>https://dariagneusheva.netlify.app/blogs/magna/</link>
-      <pubDate>Tue, 31 Oct 2017 22:26:09 -0500</pubDate>
-      
-      <guid>https://dariagneusheva.netlify.app/blogs/magna/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Ipsum</title>
+      <title>Spielberg vs Burton - who is better?</title>
       <link>https://dariagneusheva.netlify.app/blogs/ipsum/</link>
       <pubDate>Tue, 31 Oct 2017 21:28:43 -0500</pubDate>
       
       <guid>https://dariagneusheva.netlify.app/blogs/ipsum/</guid>
-      <description>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis magna sed nunc rhoncus condimentum sem. In efficitur ligula tate urna. Maecenas massa sed magna lacinia magna pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis tempus.</description>
+      <description>Today we will explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not. We already have calculated confidence intervals for the mean ratings of these two directors and they overlap.
+knitr::include_graphics(here::here(&amp;quot;images&amp;quot;, &amp;quot;directors.png&amp;quot;), error = FALSE) First, we will reproduce this graph.
+In addition, we will run a hypothesis test. We will use both the t.test command and the infer package to simulate from a null distribution, where we assume zero difference between the two.</description>
+    </item>
+    
+    <item>
+      <title>Believing in Global Warming - does it depend on your political views?</title>
+      <link>https://dariagneusheva.netlify.app/blogs/tempus/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://dariagneusheva.netlify.app/blogs/tempus/</guid>
+      <description>A 2010 Pew Research poll asked 1,306 Americans, “From what you’ve read and heard, is there solid evidence that the average temperature on earth has been getting warmer over the past few decades, or not?”
+In this exercise, we analyze whether there are any differences between the proportion of people who believe the earth is getting warmer and their political ideology. As usual, from the survey sample data, we will use the proportions to estimate values of population parameters.</description>
+    </item>
+    
+    <item>
+      <title>Gender Pay Gap at Omega - unjustified?</title>
+      <link>https://dariagneusheva.netlify.app/blogs/magna/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://dariagneusheva.netlify.app/blogs/magna/</guid>
+      <description>At the last board meeting of Omega Group Plc., the headquarters of a large multinational company, the issue was raised that women were being discriminated in the company, in the sense that the salaries were not the same for male and female executives. A quick analysis of a sample of 50 employees (of which 24 men and 26 women) revealed that the average salary for men was about 8,700 higher than for women.</description>
+    </item>
+    
+    <item>
+      <title>Where do people drink the most?</title>
+      <link>https://dariagneusheva.netlify.app/blogs/aliquam/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://dariagneusheva.netlify.app/blogs/aliquam/</guid>
+      <description>Back in 2014, fivethiryeight.com published an article on alchohol consumption in different countries. The data drinks is available as part of the fivethirtyeight package. Make sure you have installed the fivethirtyeight package before proceeding.
+library(fivethirtyeight) data(drinks) # or download directly # alcohol_direct &amp;lt;- read_csv(&amp;quot;https://raw.githubusercontent.com/fivethirtyeight/data/master/alcohol-consumption/drinks.csv&amp;quot;) What are the variable types? Any missing values we should worry about?
+skimr::skim(drinks) #We have one character and four numeric variables. We don&#39;t have any missing values.</description>
     </item>
     
   </channel>

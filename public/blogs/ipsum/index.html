@@ -6,9 +6,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<meta name="description" content="Your description">
-	<meta name="author" content="Your name">
+	<meta name="author" content="Daria">
 	<meta name="generator" content="Hugo 0.88.1" />
-	<title>Ipsum &middot; Forty</title>
+	<title>Spielberg vs Burton - who is better? &middot; Daria</title>
 	<!-- Stylesheets -->
 	
 	<link rel="stylesheet" href="https://dariagneusheva.netlify.app/css/main.css"/>
@@ -40,7 +40,7 @@
 
             <!-- Header -->
     <header id="header" class="alt">
-        <a href="https://dariagneusheva.netlify.app/" class="logo"><strong>Forty</strong> <span>By HTML5 Up</span></a>
+        <a href="https://dariagneusheva.netlify.app/" class="logo"><strong>Learn R</strong> <span></span></a>
         <nav>
             <a href="#menu">Menu</a>
         </nav>
@@ -53,10 +53,6 @@
                 <li><a href="https://dariagneusheva.netlify.app/">Home</a></li>
             
                 <li><a href="https://dariagneusheva.netlify.app/blogs">Blogs</a></li>
-            
-                <li><a href="https://dariagneusheva.netlify.app/blogs/ipsum">Generic Blog</a></li>
-            
-                <li><a href="https://dariagneusheva.netlify.app/elements.html">Elements</a></li>
             
 
         </ul>
@@ -77,12 +73,122 @@
                     <section id="one">
                         <div class="inner">
                             <header class="major">
-                                <h1>Ipsum</h1>
+                                <h1>Spielberg vs Burton - who is better?</h1>
                             </header>
                             
-                                <span class="image main"><img src="/img/blogs/pic10.jpg" alt="" /></span>
+                                <span class="image main"><img src="/img/blogs/data_analysis.jpg" alt="" /></span>
                             
-                            <p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis magna sed nunc rhoncus condimentum sem. In efficitur ligula tate urna. Maecenas massa sed magna lacinia magna pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis tempus.</p>
+                            <p>Today we will explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not. We already have calculated confidence intervals for the mean ratings of these two directors and they overlap.</p>
+<pre tabindex="0"><code class="language-{r" data-lang="{r">knitr::include_graphics(here::here(&quot;images&quot;, &quot;directors.png&quot;), error = FALSE)
+</code></pre><p>First, we will reproduce this graph.</p>
+<p>In addition, we will run a hypothesis test. We will use both the <code>t.test</code> command and the <code>infer</code> package to simulate from a null distribution, where we assume zero difference between the two.</p>
+<p>First, we define our null and alternative hypothesis. Our null hypothesis is that Steven Spielberg and Tim Burton have the same mean IMDB ratings, and our alternative hypothesis is that they do not have the same mean IMDB rating.</p>
+<p>We load the data and examine its structure:</p>
+<pre tabindex="0"><code class="language-{r" data-lang="{r">movies &lt;- read_csv(here::here(&quot;data&quot;, &quot;movies.csv&quot;))
+glimpse(movies)
+</code></pre><p>In the next step, we will reproduce the graph:</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">
+# We create a new dataframe that only includes the ratings of Steven Spielberg and Tim Burton
+movies_rating &lt;- movies %&gt;% 
+  group_by(director) %&gt;%
+  filter(director %in% c(&quot;Steven Spielberg&quot;,&quot;Tim Burton&quot;)) %&gt;% 
+  #Only keep the raiting column
+  select(rating)
+
+# Next, we calculate the confidence intervals of the mean ratings of the two directors  
+movies_interval &lt;- movies_rating %&gt;% 
+  summarise(n = n(),
+            mean_rating = mean(rating, na.rm = TRUE),
+         se = sd(rating, na.rm=TRUE)/sqrt(n),
+         lower = mean_rating - 1.96*se,
+         upper = mean_rating + 1.96*se) %&gt;% 
+  mutate(director = fct_reorder(director, desc(c(&quot;Steven Spielberg&quot;,&quot;Tim Burton&quot;)))) 
+       
+movies_interval
+</code></pre><pre tabindex="0"><code class="language-{r," data-lang="{r,">
+ggplot(movies_interval, aes(x=mean_rating)) +
+  geom_errorbar(aes(xmin=lower,
+                xmax=upper,
+                y=director, 
+                color=director), 
+                width=0.1, 
+                size=2 ) +
+  geom_point(mapping=aes(x=mean_rating, y=director, color=director,fill=director), size=4, shape=21) +
+  geom_text(aes(y=director,label=round(mean_rating, digits=2)),
+            vjust = 0, 
+            nudge_y = 0.1,
+            size = 6) +
+  geom_text(aes(y=director,label=round(lower, digits=2)),
+            vjust = 0, 
+            nudge_x = -0.29,
+            nudge_y = 0.1,
+            size = 5) +
+  geom_text(aes(y=director,label=round(upper, digits=2)),
+            vjust = 0, 
+            nudge_x = 0.29,
+            nudge_y = 0.1,
+            size = 5) +
+  scale_color_manual(values = c(&quot;Tim Burton&quot; = &quot;lightseagreen&quot;, &quot;Steven Spielberg&quot; = &quot;salmon&quot;)) +
+  scale_fill_manual(values = c(&quot;Tim Burton&quot; = &quot;lightseagreen&quot;, &quot;Steven Spielberg&quot; = &quot;salmon&quot;)) +
+  geom_rect(aes(xmin=7.29,
+                xmax=7.30,
+                ymin=-Inf,
+                ymax=Inf),
+                fill=&quot;light grey&quot;,
+                alpha=0.5) +
+  theme_bw() +
+  theme(legend.position = &quot;none&quot;) +
+  labs(title = &quot;Do Spielberg and Burton have the same mean IMDB ratings?&quot;,
+      subtitle = &quot;95% Confidence Intervals overlap&quot;,
+      y = &quot;&quot;,
+      x = &quot;Mean IMDB Rating&quot;) +
+  scale_x_continuous(breaks = seq(6.5, 8.5, by = 0.5))
+</code></pre><p>Next, we will conduct a t-test to verify our hypothesis:</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">t.test( rating ~ director, data = movies_rating)
+
+</code></pre><blockquote>
+<p>Despite the overlapping confidence intervals, our t-test shows that we reject the null-hypothesis at the 5% level (p-value &lt; 0.05); therefore, we reject the hypothesis that Steven Spielberg and Tim Burton have the same mean ratings.</p>
+</blockquote>
+<p>Next, we will perform the hypothesis analysis using the &ldquo;infer package&rdquo;. First, we  initialize the test, which we save as <code>obs_diff</code>:</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">obs_diff &lt;- movies_rating %&gt;%
+  specify(rating ~ director) %&gt;%
+  calculate(stat = &quot;diff in means&quot;, order = c(&quot;Steven Spielberg&quot;, &quot;Tim Burton&quot;))
+</code></pre><p>Next, we simulate the test on the null distribution, which we save as null. We also plot our distribution:</p>
+<pre tabindex="0"><code class="language-{r," data-lang="{r,">null_dist &lt;- movies_rating %&gt;%
+  # specify variables
+  specify(rating ~ director) %&gt;%
+  
+  # assume independence, i.e, there is no difference
+  hypothesize(null = &quot;independence&quot;) %&gt;%
+  
+  # generate 1000 reps, of type &quot;permute&quot;
+  generate(reps = 1000, type = &quot;permute&quot;) %&gt;%
+  
+  # calculate statistic of difference, namely &quot;diff in means&quot;
+  calculate(stat = &quot;diff in means&quot;, order = c(&quot;Steven Spielberg&quot;, &quot;Tim Burton&quot;))
+
+ggplot(data = null_dist, aes(x = stat)) +
+  geom_histogram(color = &quot;black&quot;)+
+  labs(
+        title = &quot;Distribution of Difference in Mean Ratings&quot;,
+        subtitle = &quot;between Steven Spielberg and Tim Burton&quot;,
+        x = &quot;Difference in Mean Ratings&quot;,
+        y = &quot;Count&quot;
+  )
+</code></pre><p>Finally, we will visualize to see how many of the null permutations have a difference of at least obs_stat<code>of</code>r obs_diff %&gt;% pull() %&gt;% round(2)` and will compute a p-value.</p>
+<pre tabindex="0"><code class="language-{r," data-lang="{r,">null_dist %&gt;% visualize() +
+  shade_p_value(obs_stat = obs_diff, direction = &quot;two-sided&quot;)+
+   labs(
+       x = &quot;Difference in Mean Ratings&quot;,
+       y = &quot;Count&quot;
+  )
+
+null_dist %&gt;%
+  get_p_value(obs_stat = obs_diff, direction = &quot;two_sided&quot;)
+ 
+</code></pre><blockquote>
+<p>Looking at the simulation-based distribution, our p-value is still very small (0.006 &lt; 0.05), which confirms that we should reject our null hypothesis: Steven Spielberg and Tim Burton do not have same mean IMDB ratings.</p>
+</blockquote>
 
                         </div>
                     </section>
@@ -97,19 +203,15 @@
         <div class="inner">
             <ul class="icons">
                 
-                    <li><a href="https://www.twitter.com" class="icon alt fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+                    <li><a href="https://www.instagram.com/daria_gneusheva/" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
                 
-                    <li><a href="https://www.facebook.com" class="icon alt fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+                    <li><a href="https://github.com/DariaGneusheva" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
                 
-                    <li><a href="https://www.instagram.com" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
-                
-                    <li><a href="https://www.github.com" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
-                
-                    <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                    <li><a href="https://www.linkedin.com/in/dgneusheva/" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
                 
             </ul>
             <ul class="copyright">
-                <li>&copy; Company Name</li>
+                <li>&copy; Daria Gneusheva</li>
                 
                 <li>Design:  <a href="https://www.html5up.net">HTML5 UP</a></li>
                 

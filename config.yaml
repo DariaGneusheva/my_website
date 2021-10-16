@@ -56,9 +56,6 @@ params:
     button1:
       - name: Get Started
         url: blogs
-    button2:
-      - name: Log In
-        url: '#'
     links:
       - name: Home
         url: '#'
@@ -93,3 +90,8 @@ params:
     subtitle: "Learning R doesn't have to be boring and time-consuming. I will walk you step-by-step through diverse real-life and fictional stories, searching for simple answers to complicated problems. Click the button below to explore more content."
     title: Explore more
     url: blogs
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true

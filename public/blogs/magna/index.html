@@ -6,9 +6,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<meta name="description" content="Your description">
-	<meta name="author" content="Your name">
+	<meta name="author" content="Daria">
 	<meta name="generator" content="Hugo 0.88.1" />
-	<title>Magna &middot; Forty</title>
+	<title>Gender Pay Gap at Omega - unjustified? &middot; Daria</title>
 	<!-- Stylesheets -->
 	
 	<link rel="stylesheet" href="https://dariagneusheva.netlify.app/css/main.css"/>
@@ -40,7 +40,7 @@
 
             <!-- Header -->
     <header id="header" class="alt">
-        <a href="https://dariagneusheva.netlify.app/" class="logo"><strong>Forty</strong> <span>By HTML5 Up</span></a>
+        <a href="https://dariagneusheva.netlify.app/" class="logo"><strong>Learn R</strong> <span></span></a>
         <nav>
             <a href="#menu">Menu</a>
         </nav>
@@ -53,10 +53,6 @@
                 <li><a href="https://dariagneusheva.netlify.app/">Home</a></li>
             
                 <li><a href="https://dariagneusheva.netlify.app/blogs">Blogs</a></li>
-            
-                <li><a href="https://dariagneusheva.netlify.app/blogs/ipsum">Generic Blog</a></li>
-            
-                <li><a href="https://dariagneusheva.netlify.app/elements.html">Elements</a></li>
             
 
         </ul>
@@ -77,12 +73,176 @@
                     <section id="one">
                         <div class="inner">
                             <header class="major">
-                                <h1>Magna</h1>
+                                <h1>Gender Pay Gap at Omega - unjustified?</h1>
                             </header>
                             
-                                <span class="image main"><img src="/img/blogs/pic09.jpg" alt="" /></span>
+                                <span class="image main"><img src="/img/blogs/omega.jpg" alt="" /></span>
                             
-                            
+                            <p>At the last board meeting of Omega Group Plc., the headquarters of a large multinational company, the issue was raised that women were being discriminated in the company, in the sense that the salaries were not the same for male and female executives. A quick analysis of a sample of 50 employees (of which 24 men and 26 women) revealed that the average salary for men was about 8,700 higher than for women. This seemed like a considerable difference, so it was decided that a further analysis of the company salaries was warranted.</p>
+<p>We will carry out the analysis. The objective is to find out whether there is indeed a significant difference between the salaries of men and women, and whether the difference is due to discrimination or whether it is based on another, possibly valid, determining factor.</p>
+<h2 id="loading-the-data">Loading the data</h2>
+<pre tabindex="0"><code class="language-{r" data-lang="{r">omega &lt;- read_csv(here::here(&quot;data&quot;, &quot;omega.csv&quot;))
+glimpse(omega) # examine the data frame
+</code></pre><h2 id="relationship-salary---gender-">Relationship Salary - Gender ?</h2>
+<p>The data frame <code>omega</code>  contains the salaries for the sample of 50 executives in the company.</p>
+<p>We calculate summary statistics on salary by gender. Also, we create and print a dataframe where, for each gender, we show the mean, SD, sample size, the t-critical, the SE, the margin of error, and the low/high endpoints of a 95% confidence interval</p>
+<pre tabindex="0"><code class="language-{r," data-lang="{r,"># Summary Statistics of salary by gender
+mosaic::favstats (salary ~ gender, data=omega)
+
+
+omega %&gt;% 
+  # calculate needed statistics in each group
+  group_by(gender) %&gt;% 
+  
+  summarise(
+    #calculate number of observations in each group
+    n=n(), 
+    
+    # calculate mean and standar deviation of salary in in each group
+    mean=mean(salary, na.rm = TRUE), 
+    sd=sd(salary, na.rm = TRUE),
+    
+    # calculate t-critical value in our case
+    t_critical=qt(0.975, n-1),
+    
+    #calculate SE and margin of error in each group
+    se=sd/sqrt(n), 
+    margin_error=se*t_critical, 
+    
+    # calculate confidence interval in each group
+    lower_ci=mean-margin_error, 
+    upper_ci=mean+margin_error)
+</code></pre><blockquote>
+<p>The lower bound of the average salary for male executives is higher than the upper bound of the average salary for female executives, so the confidence intervals don&rsquo;t overlap. This means there is a significant difference between the salaries of male and female executives.</p>
+</blockquote>
+<p>We also run a hypothesis test, assuming as a null hypothesis that the mean difference in salaries is zero, or that, on average, men and women make the same amount of money. We run our hypothesis testing using <code>t.test()</code>, as well as with the simulation method from the <code>infer</code> package.</p>
+<pre tabindex="0"><code class="language-{r," data-lang="{r,"># hypothesis testing using t.test() 
+t.test(salary~gender, data=omega)
+
+
+# hypothesis testing using infer package
+observed_statistic &lt;- omega %&gt;%
+  
+  # specify variables
+  specify(salary ~ gender) %&gt;%
+  
+  # calculate statistic of difference, namely &quot;diff in means&quot;
+  calculate(stat = &quot;diff in means&quot;, order = c(&quot;female&quot;, &quot;male&quot;))
+
+
+null_dist_2_sample &lt;- omega %&gt;%
+  
+  # specify variables
+  specify(salary ~ gender) %&gt;%
+  
+  # assume null hypothesis to be independent
+  hypothesize(null = &quot;independence&quot;) %&gt;%
+  
+  # generate 1000 reps, of type &quot;permute&quot;
+  generate(reps = 1000, type = &quot;permute&quot;) %&gt;%
+  
+  # calculate statistic of difference, namely &quot;diff in means&quot;
+  calculate(stat = &quot;diff in means&quot;, order = c(&quot;female&quot;, &quot;male&quot;))
+
+
+null_dist_2_sample %&gt;%
+  # visualize the result in a ggplot
+  visualize() + 
+  shade_p_value(observed_statistic,
+                direction = &quot;two-sided&quot;) +
+  
+  # add title and subtitle
+  labs(x = &quot;Difference in Salary\n(For Male and Female)&quot;,
+       y = &quot;Count&quot;,
+       subtitle = &quot;Red line shows observed difference in mean salaray&quot;)
+
+# get p_value from the result
+p_value_2_sample &lt;- null_dist_2_sample %&gt;%
+  get_p_value(obs_stat = observed_statistic,
+              direction = &quot;two-sided&quot;)
+
+# check p_value for the hypothesis testing
+p_value_2_sample
+</code></pre><blockquote>
+<p>From our analysis, we can see that the p-value of the t-test is less than 0.05, which means we have sufficient evidence to reject the $H_0$. We can conclude that at the 5% level, there is a significant difference between the salaries of male and female executives.</p>
+</blockquote>
+<h2 id="relationship-experience---gender">Relationship Experience - Gender?</h2>
+<p>At the board meeting, someone raised the issue that there was indeed a substantial difference between male and female salaries, but that this was attributable to other reasons such as differences in experience. A questionnaire send out to the 50 executives in the sample reveals that the average experience of the men is approximately 21 years, whereas the women only have about 7 years experience on average.</p>
+<pre tabindex="0"><code class="language-{r," data-lang="{r,"># Summary Statistics of salary by gender
+favstats (experience ~ gender, data=omega)
+</code></pre><p>We will examine the new data below:</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}"># hypothesis testing using t.test() 
+t.test(experience~gender, omega)
+
+# hypothesis testing using infer package
+observed_statistic_exp &lt;- omega %&gt;%
+  
+  # specify variables
+  specify(experience ~ gender) %&gt;%
+  
+  # calculate statistic of difference, namely &quot;diff in means&quot;
+  calculate(stat = &quot;diff in means&quot;, order = c(&quot;female&quot;, &quot;male&quot;))
+
+
+null_dist_2_sample_exp &lt;-  omega %&gt;%
+  
+  # specify variables
+  specify(experience ~ gender) %&gt;%
+  
+  # assume null hypothesis to be independent
+  hypothesize(null = &quot;independence&quot;) %&gt;%
+  
+  # generate 1000 reps, of type &quot;permute&quot;
+  generate(reps = 1000, type = &quot;permute&quot;) %&gt;%
+  
+  # calculate statistic of difference, namely &quot;diff in means&quot;
+  calculate(stat = &quot;diff in means&quot;, order = c(&quot;female&quot;, &quot;male&quot;))
+
+
+# visualize the result in a ggplot
+null_dist_2_sample_exp %&gt;%
+  visualize() + 
+  shade_p_value(observed_statistic_exp,
+                direction = &quot;two-sided&quot;) +
+  labs(x = &quot;Difference in Experience\n(For Male and Female)&quot;,
+       y = &quot;Count&quot;,
+       subtitle = &quot;Red line shows observed difference in mean experience&quot;)
+
+
+# get p_value from the result
+p_value_2_sample_exp &lt;- null_dist_2_sample_exp %&gt;%
+  get_p_value(obs_stat = observed_statistic_exp,
+              direction = &quot;two-sided&quot;)
+p_value_2_sample_exp
+</code></pre><blockquote>
+<p>The result suggests that the p-value is less than 0.05, so there is a significant difference between the experience of male and female executives. This endangers our previous conclusion that the difference in male and female salaries is because of discrimination.</p>
+</blockquote>
+<h2 id="relationship-salary---experience-">Relationship Salary - Experience ?</h2>
+<p>Someone at the meeting argues that clearly, a more thorough analysis of the relationship between salary and experience is required before any conclusion can be drawn about whether there is any gender-based salary discrimination in the company.</p>
+<p>We analyse the relationship between salary and experience and we draw a scatter plot to visually inspect the data:</p>
+<pre tabindex="0"><code class="language-{r," data-lang="{r,"># We draw a scatter plot between salary against experience
+ggplot(data=omega, aes(x=experience, y=salary)) + 
+  geom_point() + 
+  geom_smooth(method=&quot;lm&quot;)+
+  labs(
+       title = &quot;Salary vs. Experience&quot;,
+       x = &quot;Experience (years)&quot;,
+       y = &quot;Salary ($)&quot;
+       
+  )
+</code></pre><blockquote>
+<p>The scatter plot clearly shows a positive relationship between experience and salary at Omega Corp.</p>
+</blockquote>
+<h2 id="check-correlations-between-the-data">Check correlations between the data</h2>
+<p>We will use <code>GGally:ggpairs()</code> to create a scatter plot and a correlation matrix. Essentially, we change the order our variables will appear in and have the dependent variable (Y), salary, as last in our list. We then pipe the data frame to <code>ggpairs()</code> with <code>aes</code> arguments to colour by <code>gender</code> and make the plots somewhat transparent (<code>alpha  = 0.3</code>).</p>
+<pre tabindex="0"><code class="language-{r," data-lang="{r,">omega %&gt;% 
+  select(gender, experience, salary) %&gt;% #order variables they will appear in ggpairs()
+  ggpairs(aes(colour=gender, alpha = 0.3))+
+  theme_bw()
+</code></pre><blockquote>
+<p>There is a positive relationship between salary and experience, which means higher salaries are associated with more experience. Therefore, we may not be able to conclude that the average higher male salary is due to gender discrimination, since males also seems to have more average experience than female.</p>
+</blockquote>
+
                         </div>
                     </section>
             <!-- Disqus Inject -->
@@ -96,19 +256,15 @@
         <div class="inner">
             <ul class="icons">
                 
-                    <li><a href="https://www.twitter.com" class="icon alt fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+                    <li><a href="https://www.instagram.com/daria_gneusheva/" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
                 
-                    <li><a href="https://www.facebook.com" class="icon alt fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+                    <li><a href="https://github.com/DariaGneusheva" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
                 
-                    <li><a href="https://www.instagram.com" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
-                
-                    <li><a href="https://www.github.com" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
-                
-                    <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                    <li><a href="https://www.linkedin.com/in/dgneusheva/" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
                 
             </ul>
             <ul class="copyright">
-                <li>&copy; Company Name</li>
+                <li>&copy; Daria Gneusheva</li>
                 
                 <li>Design:  <a href="https://www.html5up.net">HTML5 UP</a></li>
                 

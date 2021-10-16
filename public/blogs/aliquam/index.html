@@ -6,9 +6,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<meta name="description" content="Your description">
-	<meta name="author" content="Your name">
+	<meta name="author" content="Daria">
 	<meta name="generator" content="Hugo 0.88.1" />
-	<title>Aliquam &middot; Forty</title>
+	<title>Where do people drink the most? &middot; Daria</title>
 	<!-- Stylesheets -->
 	
 	<link rel="stylesheet" href="https://dariagneusheva.netlify.app/css/main.css"/>
@@ -40,7 +40,7 @@
 
             <!-- Header -->
     <header id="header" class="alt">
-        <a href="https://dariagneusheva.netlify.app/" class="logo"><strong>Forty</strong> <span>By HTML5 Up</span></a>
+        <a href="https://dariagneusheva.netlify.app/" class="logo"><strong>Learn R</strong> <span></span></a>
         <nav>
             <a href="#menu">Menu</a>
         </nav>
@@ -53,10 +53,6 @@
                 <li><a href="https://dariagneusheva.netlify.app/">Home</a></li>
             
                 <li><a href="https://dariagneusheva.netlify.app/blogs">Blogs</a></li>
-            
-                <li><a href="https://dariagneusheva.netlify.app/blogs/ipsum">Generic Blog</a></li>
-            
-                <li><a href="https://dariagneusheva.netlify.app/elements.html">Elements</a></li>
             
 
         </ul>
@@ -77,12 +73,60 @@
                     <section id="one">
                         <div class="inner">
                             <header class="major">
-                                <h1>Aliquam</h1>
+                                <h1>Where do people drink the most?</h1>
                             </header>
                             
-                                <span class="image main"><img src="/img/blogs/pic07.jpg" alt="" /></span>
+                                <span class="image main"><img src="/img/blogs/festival.jpg" alt="" /></span>
                             
-                            
+                            <p>Back in 2014, <a href="https://fivethirtyeight.com/features/dear-mona-followup-where-do-people-drink-the-most-beer-wine-and-spirits/">fivethiryeight.com</a> published an article on alchohol consumption in different countries. The data <code>drinks</code> is available as part of the <code>fivethirtyeight</code> package. Make sure you have installed the <code>fivethirtyeight</code> package before proceeding.</p>
+<pre tabindex="0"><code class="language-{r," data-lang="{r,">library(fivethirtyeight)
+data(drinks)
+
+
+# or download directly
+# alcohol_direct &lt;- read_csv(&quot;https://raw.githubusercontent.com/fivethirtyeight/data/master/alcohol-consumption/drinks.csv&quot;)
+
+</code></pre><p>What are the variable types? Any missing values we should worry about?</p>
+<pre tabindex="0"><code class="language-{r" data-lang="{r">skimr::skim(drinks)
+
+#We have one character and four numeric variables. We don't have any missing values.
+
+
+</code></pre><p>Make a plot that shows the top 25 beer consuming countries</p>
+<pre tabindex="0"><code class="language-{r" data-lang="{r"># YOUR CODE GOES HERE
+drinks %&gt;% 
+  select(country, beer_servings)%&gt;%
+  slice_max(order_by=beer_servings, n=25) %&gt;% 
+  ggplot(aes(y=fct_reorder(country,beer_servings), x=beer_servings))+
+  geom_col()+
+  NULL
+
+</code></pre><p>Make a plot that shows the top 25 wine consuming countries</p>
+<pre tabindex="0"><code class="language-{r" data-lang="{r">
+# YOUR CODE GOES HERE
+drinks %&gt;% 
+  select(country, wine_servings)%&gt;%
+  slice_max(order_by=wine_servings, n=25) %&gt;% 
+  ggplot(aes(y=fct_reorder(country,wine_servings), x=wine_servings))+
+  geom_col()+
+  NULL
+
+</code></pre><p>Finally, make a plot that shows the top 25 spirit consuming countries</p>
+<pre tabindex="0"><code class="language-{r" data-lang="{r"># YOUR CODE GOES HERE
+
+drinks %&gt;% 
+  select(country, spirit_servings)%&gt;%
+  slice_max(order_by=spirit_servings, n=25) %&gt;% 
+  ggplot(aes(y=fct_reorder(country,spirit_servings), x=spirit_servings))+
+  geom_col()+
+  NULL
+
+</code></pre><p>What can you infer from these plots? Don&rsquo;t just explain what&rsquo;s in the graph, but speculate or tell a short story (1-2 paragraphs max).</p>
+<blockquote>
+<p>TYPE YOUR ANSWER AFTER (AND OUTSIDE!) THIS BLOCKQUOTE.</p>
+</blockquote>
+<p>Looking at the graphs above, we can infer that different countries are specialised in production of different kinds of alcohol. Historically, countries strong in agriculture (Germany, Czech Republic, Poland) have higher beer production. Similarly, countries like France &amp; Portugal have a favourable climate for wine production, which eventually becomes part of their culture.From a macroeconomic perspective, countries tend to specialise in what they are strong in, which we can observe in these graphs as well. In addition, poorer countries tend to consume stronger alcohol; we can observe Grenada, Belarus, Russia are the top 3 consumers of spirits.</p>
+
                         </div>
                     </section>
             <!-- Disqus Inject -->
@@ -96,19 +140,15 @@
         <div class="inner">
             <ul class="icons">
                 
-                    <li><a href="https://www.twitter.com" class="icon alt fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+                    <li><a href="https://www.instagram.com/daria_gneusheva/" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
                 
-                    <li><a href="https://www.facebook.com" class="icon alt fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+                    <li><a href="https://github.com/DariaGneusheva" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
                 
-                    <li><a href="https://www.instagram.com" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
-                
-                    <li><a href="https://www.github.com" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
-                
-                    <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                    <li><a href="https://www.linkedin.com/in/dgneusheva/" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
                 
             </ul>
             <ul class="copyright">
-                <li>&copy; Company Name</li>
+                <li>&copy; Daria Gneusheva</li>
                 
                 <li>Design:  <a href="https://www.html5up.net">HTML5 UP</a></li>
                 

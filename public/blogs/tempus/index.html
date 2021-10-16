@@ -6,9 +6,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<meta name="description" content="Your description">
-	<meta name="author" content="Your name">
+	<meta name="author" content="Daria">
 	<meta name="generator" content="Hugo 0.88.1" />
-	<title>Tempus &middot; Forty</title>
+	<title>Believing in Global Warming - does it depend on your political views? &middot; Daria</title>
 	<!-- Stylesheets -->
 	
 	<link rel="stylesheet" href="https://dariagneusheva.netlify.app/css/main.css"/>
@@ -40,7 +40,7 @@
 
             <!-- Header -->
     <header id="header" class="alt">
-        <a href="https://dariagneusheva.netlify.app/" class="logo"><strong>Forty</strong> <span>By HTML5 Up</span></a>
+        <a href="https://dariagneusheva.netlify.app/" class="logo"><strong>Learn R</strong> <span></span></a>
         <nav>
             <a href="#menu">Menu</a>
         </nav>
@@ -53,10 +53,6 @@
                 <li><a href="https://dariagneusheva.netlify.app/">Home</a></li>
             
                 <li><a href="https://dariagneusheva.netlify.app/blogs">Blogs</a></li>
-            
-                <li><a href="https://dariagneusheva.netlify.app/blogs/ipsum">Generic Blog</a></li>
-            
-                <li><a href="https://dariagneusheva.netlify.app/elements.html">Elements</a></li>
             
 
         </ul>
@@ -77,12 +73,38 @@
                     <section id="one">
                         <div class="inner">
                             <header class="major">
-                                <h1>Tempus</h1>
+                                <h1>Believing in Global Warming - does it depend on your political views?</h1>
                             </header>
                             
-                                <span class="image main"><img src="/img/blogs/pic08.jpg" alt="" /></span>
+                                <span class="image main"><img src="/img/blogs/climate_change.jpg" alt="" /></span>
                             
-                            
+                            <p>A 2010 Pew Research poll asked 1,306 Americans, “From what you’ve read and heard, is there solid evidence that the average temperature on earth has been getting warmer over the past few decades, or not?”</p>
+<p>In this exercise, we analyze whether there are any differences between the proportion of people who believe the earth is getting warmer and their political ideology. As usual, from the survey sample data, we will use the proportions to estimate values of population parameters. The file has 2253 observations on the following 2 variables:</p>
+<p>party_or_ideology: a factor (categorical) variable with levels Conservative Republican, Liberal Democrat, Mod/Cons Democrat, Mod/Lib Republican
+response : whether the respondent believes the earth is warming or not, or Don’t know/ refuse to answer</p>
+<p>Firstly, we load the file.</p>
+<pre tabindex="0"><code class="language-{r," data-lang="{r,">global_warming_pew &lt;- read_csv(here::here(&quot;data&quot;, &quot;global_warming_pew.csv&quot;))
+</code></pre><p>We removed many responses which should not be taken into consideration, like &ldquo;No Answer&rdquo;, &ldquo;Don&rsquo;t Know&rdquo;, &ldquo;Not applicable&rdquo;, &ldquo;Refused to Answer&rdquo;.</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">global_warming_pew %&gt;% 
+  count(party_or_ideology, response)
+</code></pre><p>We constructed four 95% confidence intervals to estimate population parameters, for the percentage who believe that <strong>Earth is warming</strong>, according to their party or ideology.</p>
+<pre tabindex="0"><code class="language-{r}" data-lang="{r}">party_ci &lt;- global_warming_pew %&gt;% 
+  filter(response != &quot;Don't know / refuse to answer&quot;) %&gt;%
+  mutate(warm = response == &quot;Earth is warming&quot;) %&gt;% 
+  group_by(party_or_ideology) %&gt;% 
+  summarise(mean_warm = mean(warm, na.rm = TRUE),
+                         sd_warm = sd(warm, na.rm = TRUE),
+                         count_warm = n(),
+                         se_warm = sd_warm/sqrt(count_warm),
+                         t_crit = qt(0.975, count_warm-1),
+                         lower_ci = mean_warm - t_crit * se_warm,
+                         upper_ci = mean_warm + t_crit * se_warm
+            )
+  
+party_ci
+
+</code></pre><p>Looking at the four confidence intervals, we can see that none of them overlap, suggesting that opinion on whether or not a respondent believes the earth is warming is dependent on political ideology.</p>
+
                         </div>
                     </section>
             <!-- Disqus Inject -->
@@ -96,19 +118,15 @@
         <div class="inner">
             <ul class="icons">
                 
-                    <li><a href="https://www.twitter.com" class="icon alt fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+                    <li><a href="https://www.instagram.com/daria_gneusheva/" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
                 
-                    <li><a href="https://www.facebook.com" class="icon alt fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+                    <li><a href="https://github.com/DariaGneusheva" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
                 
-                    <li><a href="https://www.instagram.com" class="icon alt fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
-                
-                    <li><a href="https://www.github.com" class="icon alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
-                
-                    <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
+                    <li><a href="https://www.linkedin.com/in/dgneusheva/" class="icon alt fa-linkedin" target="_blank"><span class="label">LinkedIn</span></a></li>
                 
             </ul>
             <ul class="copyright">
-                <li>&copy; Company Name</li>
+                <li>&copy; Daria Gneusheva</li>
                 
                 <li>Design:  <a href="https://www.html5up.net">HTML5 UP</a></li>
                 
