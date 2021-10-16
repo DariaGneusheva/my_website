@@ -50,7 +50,7 @@ params:
       - icon: fa-linkedin
         label: LinkedIn
         url: https://www.linkedin.com/in/dgneusheva/
-  image: 'banner.jpg'
+  image: ''
   name: Daria
   navigation:
     button1:
