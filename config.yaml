@@ -6,7 +6,6 @@ googleAnalytics: ''
 disqusShortname: ''
 params:
   banner:
-    image: banner.jpg
     buttonText: Discover 
     subtitle: |-
       Data Science meets R: learn with me step-by-step & enjoy the process
@@ -51,7 +50,7 @@ params:
       - icon: fa-linkedin
         label: LinkedIn
         url: https://www.linkedin.com/in/dgneusheva/
-  image: ''
+  image: 'banner.jpg'
   name: Daria
   navigation:
     button1:
