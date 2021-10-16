@@ -6,6 +6,7 @@ googleAnalytics: ''
 disqusShortname: ''
 params:
   banner:
+    image: banner.jpg
     buttonText: Discover 
     subtitle: |-
       Data Science meets R: learn with me step-by-step & enjoy the process
