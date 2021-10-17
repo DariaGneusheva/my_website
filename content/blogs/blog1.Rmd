@@ -11,6 +11,42 @@ slug: ipsum
 title: Spielberg vs Burton - who is better?
 ---
 
+
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+
+```{r load-libraries, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(GGally)
+library(readxl)
+library(here)
+library(skimr)
+library(janitor)
+library(broom)
+library(tidyquant)
+library(infer)
+library(openintro)
+library(scales)
+library(lubridate) # to manipulate date variables
+```
+
+
 Today we will explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not. We already have calculated confidence intervals for the mean ratings of these two directors and they overlap.
 
 
