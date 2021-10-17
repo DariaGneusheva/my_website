@@ -4,9 +4,6 @@ title: Forty
 theme: forty
 googleAnalytics: ''
 disqusShortname: ''
-markup:
-  goldmark:
-    renderer:
 params:
   banner: 
     buttonText: Discover 
