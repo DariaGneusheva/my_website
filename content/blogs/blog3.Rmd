@@ -18,6 +18,42 @@ In this exercise, we analyze whether there are any differences between the propo
 party_or_ideology: a factor (categorical) variable with levels Conservative Republican, Liberal Democrat, Mod/Cons Democrat, Mod/Lib Republican
 response : whether the respondent believes the earth is warming or not, or Don’t know/ refuse to answer
 
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(
+  message = FALSE, 
+  warning = FALSE, 
+  tidy=FALSE,     # display code as typed
+  size="small")   # slightly smaller font for code
+options(digits = 3)
+
+# default figure size
+knitr::opts_chunk$set(
+  fig.width=6.75, 
+  fig.height=6.75,
+  fig.align = "center"
+)
+```
+
+
+```{r load-libraries, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(mosaic)
+library(ggthemes)
+library(GGally)
+library(readxl)
+library(here)
+library(skimr)
+library(janitor)
+library(broom)
+library(tidyquant)
+library(infer)
+library(openintro)
+library(scales)
+library(lubridate) # to manipulate date variables
+```
+
+
+
 Firstly, we load the file.
 
 ```{r, read_global_warming_pew_data}
