@@ -1,0 +1,63 @@
+---
+categories:
+- ""
+- ""
+date: "2021-09-31T22:26:13-05:00"
+description: 
+draft: false
+image: climate_change.jpg
+keywords: ""
+slug: tempus
+title: Believing in Global Warming - does it depend on your political views? 
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>A 2010 Pew Research poll asked 1,306 Americans, “From what you’ve read and heard, is there solid evidence that the average temperature on earth has been getting warmer over the past few decades, or not?”</p>
+<p>In this exercise, we analyze whether there are any differences between the proportion of people who believe the earth is getting warmer and their political ideology. As usual, from the survey sample data, we will use the proportions to estimate values of population parameters. The file has 2253 observations on the following 2 variables:</p>
+<p>party_or_ideology: a factor (categorical) variable with levels Conservative Republican, Liberal Democrat, Mod/Cons Democrat, Mod/Lib Republican
+response : whether the respondent believes the earth is warming or not, or Don’t know/ refuse to answer</p>
+<p>Firstly, we load the file.</p>
+<pre class="r"><code>global_warming_pew &lt;- read_csv(here::here(&quot;data&quot;, &quot;global_warming_pew.csv&quot;))</code></pre>
+<p>We removed many responses which should not be taken into consideration, like “No Answer”, “Don’t Know”, “Not applicable”, “Refused to Answer”.</p>
+<pre class="r"><code>global_warming_pew %&gt;% 
+  count(party_or_ideology, response)</code></pre>
+<pre><code>## # A tibble: 12 × 3
+##    party_or_ideology       response                          n
+##    &lt;chr&gt;                   &lt;chr&gt;                         &lt;int&gt;
+##  1 Conservative Republican Don&#39;t know / refuse to answer    45
+##  2 Conservative Republican Earth is warming                248
+##  3 Conservative Republican Not warming                     450
+##  4 Liberal Democrat        Don&#39;t know / refuse to answer    23
+##  5 Liberal Democrat        Earth is warming                405
+##  6 Liberal Democrat        Not warming                      23
+##  7 Mod/Cons Democrat       Don&#39;t know / refuse to answer    45
+##  8 Mod/Cons Democrat       Earth is warming                563
+##  9 Mod/Cons Democrat       Not warming                     158
+## 10 Mod/Lib Republican      Don&#39;t know / refuse to answer    23
+## 11 Mod/Lib Republican      Earth is warming                135
+## 12 Mod/Lib Republican      Not warming                     135</code></pre>
+<p>We constructed four 95% confidence intervals to estimate population parameters, for the percentage who believe that <strong>Earth is warming</strong>, according to their party or ideology.</p>
+<pre class="r"><code>party_ci &lt;- global_warming_pew %&gt;% 
+  filter(response != &quot;Don&#39;t know / refuse to answer&quot;) %&gt;%
+  mutate(warm = response == &quot;Earth is warming&quot;) %&gt;% 
+  group_by(party_or_ideology) %&gt;% 
+  summarise(mean_warm = mean(warm, na.rm = TRUE),
+                         sd_warm = sd(warm, na.rm = TRUE),
+                         count_warm = n(),
+                         se_warm = sd_warm/sqrt(count_warm),
+                         t_crit = qt(0.975, count_warm-1),
+                         lower_ci = mean_warm - t_crit * se_warm,
+                         upper_ci = mean_warm + t_crit * se_warm
+            )
+  
+party_ci</code></pre>
+<pre><code>## # A tibble: 4 × 8
+##   party_or_ideolo… mean_warm sd_warm count_warm se_warm t_crit lower_ci upper_ci
+##   &lt;chr&gt;                &lt;dbl&gt;   &lt;dbl&gt;      &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 Conservative Re…     0.355   0.479        698  0.0181   1.96    0.320    0.391
+## 2 Liberal Democrat     0.946   0.226        428  0.0109   1.97    0.925    0.968
+## 3 Mod/Cons Democr…     0.781   0.414        721  0.0154   1.96    0.751    0.811
+## 4 Mod/Lib Republi…     0.5     0.501        270  0.0305   1.97    0.440    0.560</code></pre>
+<p>Looking at the four confidence intervals, we can see that none of them overlap, suggesting that opinion on whether or not a respondent believes the earth is warming is dependent on political ideology.</p>
