@@ -5,7 +5,7 @@ categories:
 date: "2021-09-31T22:26:13-05:00"
 description: 
 draft: false
-image: climate_change
+image: climate_change.jpeg
 keywords: ""
 slug: tempus
 title: Believing in Global Warming - does it depend on your political views? 
