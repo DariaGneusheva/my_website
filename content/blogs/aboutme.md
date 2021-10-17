@@ -5,7 +5,7 @@ categories:
 date: "2021-08-31T22:42:51-05:00"
 description: 
 draft: false
-image: me
+image: me.jpg
 keywords: ""
 slug: me
 title: About me

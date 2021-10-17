@@ -5,7 +5,7 @@ categories:
 date: "2021-09-31T22:42:51-05:00"
 description: 
 draft: false
-image: festival,jpeg
+image: festival.jpg
 keywords: ""
 slug: aliquam
 title: Where do people drink the most?

@@ -69,23 +69,23 @@ params:
   tiles:
     enable: yes
     showcase:
-      - image: me.jpeg
+      - image: me.jpg
         subtitle: Get to know me
         title: About me
         url: blogs/me
-      - image: data_analysis.jpeg
+      - image: data_analysis.jpg
         subtitle: Intermediate Level
         title: Spielberg vs Burton - who is better?
         url: blogs/ipsum
-      - image: omega.jpeg
+      - image: omega.jpg
         subtitle: Intermediate Level
         title: Gender Pay Gap at Omega - unjustified?
         url: blogs/magna
-      - image: climate_change.jpeg
+      - image: climate_change.jpg
         subtitle: Beginner-friendly Level
         title: Believing in Global Warming - does it depend on your political views? 
         url: blogs/tempus
-      - image: festival.jpeg
+      - image: festival.jpg
         subtitle: Beginner-friendly Level
         title: Where Do People Drink The Most Beer, Wine And Spirits?
         url: blogs/aliquam
