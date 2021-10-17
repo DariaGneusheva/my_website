@@ -14,9 +14,8 @@ title: Where do people drink the most?
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
-<p>Back in 2014, <a href="https://fivethirtyeight.com/features/dear-mona-followup-where-do-people-drink-the-most-beer-wine-and-spirits/">fivethiryeight.com</a> published an article on alchohol consumption in different countries. The data <code>drinks</code> is available as part of the <code>fivethirtyeight</code> package. Make sure you have installed the <code>fivethirtyeight</code> package before proceeding.</p>
-<pre class="r"><code>library(fivethirtyeight)
-drinks &lt;- read_csv(&quot;https://raw.githubusercontent.com/fivethirtyeight/data/master/alcohol-consumption/drinks.csv&quot;)</code></pre>
+<p>Back in 2014, <a href="https://fivethirtyeight.com/features/dear-mona-followup-where-do-people-drink-the-most-beer-wine-and-spirits/">fivethiryeight.com</a> published an article on alchohol consumption in different countries.</p>
+<pre class="r"><code>drinks &lt;- read_csv(&quot;https://raw.githubusercontent.com/fivethirtyeight/data/master/alcohol-consumption/drinks.csv&quot;)</code></pre>
 <p>What are the variable types? Any missing values we should worry about?</p>
 <pre class="r"><code>skimr::skim(drinks)</code></pre>
 <table>
