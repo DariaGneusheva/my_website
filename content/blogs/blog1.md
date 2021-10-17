@@ -5,7 +5,7 @@ categories:
 date: "2017-10-31T21:28:43-05:00"
 description: ""
 draft: false
-image: data_analysis.jpg
+image: data_analysis
 keywords: ""
 slug: ipsum
 title: Spielberg vs Burton - who is better?

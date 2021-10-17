@@ -1,11 +1,11 @@
 baseURL: https://dariagneusheva.netlify.app/
 languageCode: en-us
-title: Daria
+title: Forty
 theme: forty
 googleAnalytics: ''
 disqusShortname: ''
 params:
-  banner:
+  banner: 
     buttonText: Discover 
     subtitle: |-
       Data Science meets R: learn with me step-by-step & enjoy the process
@@ -61,25 +61,31 @@ params:
         url: '#'
       - name: Blogs
         url: blogs
+      - name: About me
+        url: blogs/me
     menu: Menu
     subtitle: ""
     title: Learn R
   tiles:
     enable: yes
     showcase:
-      - image: data_analysis.jpg
+      - image: me
+        subtitle: Get to know me
+        title: About me
+        url: blogs/me
+      - image: data_analysis
         subtitle: Intermediate Level
         title: Spielberg vs Burton - who is better?
         url: blogs/ipsum
-      - image: omega.jpg
+      - image: omega
         subtitle: Intermediate Level
         title: Gender Pay Gap at Omega - unjustified?
         url: blogs/magna
-      - image: climate_change.jpg
+      - image: climate_change
         subtitle: Beginner-friendly Level
         title: Believing in Global Warming - does it depend on your political views? 
         url: blogs/tempus
-      - image: festival.jpg
+      - image: festival
         subtitle: Beginner-friendly Level
         title: Where Do People Drink The Most Beer, Wine And Spirits?
         url: blogs/aliquam
