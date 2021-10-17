@@ -11,7 +11,7 @@ slug: me
 title: About me
 ---
 
-<img src="/Users/dariagneusheva/Desktop/LBS Courses/Data Analytics/my_website/static/img/blogs" width="400"/>
+<img src="/Users/dariagneusheva/Desktop/LBS Courses/Data Analytics/my_website/static/img/post" width="400"/>
 
 Hi, I am Daria!
 
