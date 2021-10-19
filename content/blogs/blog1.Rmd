@@ -51,7 +51,7 @@ Today we will explore whether the mean IMDB rating for Steven Spielberg and Tim 
 
 
 ```{r directors, echo=FALSE, out.width="100%"}
-knitr::include_graphics(here::here("images", "directors.png"), error = FALSE)
+knitr::include_graphics(here::here("data", "directors.png"), error = FALSE)
 ```
 
 First, we will reproduce this graph.
