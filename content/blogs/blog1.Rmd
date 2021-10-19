@@ -47,16 +47,7 @@ library(lubridate) # to manipulate date variables
 ```
 
 
-Today we will explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not. We already have calculated confidence intervals for the mean ratings of these two directors and they overlap.
-
-
-```{r directors, echo=FALSE, out.width="100%"}
-knitr::include_graphics(here::here("data", "directors.png"), error = FALSE)
-```
-
-First, we will reproduce this graph.
-
-In addition, we will run a hypothesis test. We will use both the `t.test` command and the `infer` package to simulate from a null distribution, where we assume zero difference between the two.
+Today we will explore whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not. We will run a hypothesis test. We will use both the `t.test` command and the `infer` package to simulate from a null distribution, where we assume zero difference between the two.
 
 First, we define our null and alternative hypothesis. Our null hypothesis is that Steven Spielberg and Tim Burton have the same mean IMDB ratings, and our alternative hypothesis is that they do not have the same mean IMDB rating. 
 
