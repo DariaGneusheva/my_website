@@ -15,7 +15,7 @@ params:
     address:
       - city: London
         country: UK
-        street: Mallory St.
+        street: Baker St.
         title: Address
     buttonClear: Clear
     buttonSend: Send message
