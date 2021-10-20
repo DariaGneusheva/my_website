@@ -7,7 +7,7 @@ description:
 draft: false
 image: climate_change.jpg
 keywords: ""
-slug: tempus
+slug: climate
 title: Believing in Global Warming - does it depend on your political views? 
 ---
 

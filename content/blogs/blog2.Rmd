@@ -7,7 +7,7 @@ description: ""
 draft: false
 image: omega.jpg
 keywords: ""
-slug: magna
+slug: omega
 title: Gender Pay Gap at Omega - unjustified?
 ---
 

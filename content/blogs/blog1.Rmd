@@ -7,7 +7,7 @@ description: ""
 draft: false
 image: data_analysis.jpg
 keywords: ""
-slug: ipsum
+slug: movies
 title: Spielberg vs Burton - who is better?
 ---
 

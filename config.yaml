@@ -76,15 +76,15 @@ params:
       - image: data_analysis.jpg
         subtitle: Intermediate Level
         title: Spielberg vs Burton - who is better?
-        url: blogs/ipsum
+        url: blogs/movies
       - image: omega.jpg
         subtitle: Intermediate Level
         title: Gender Pay Gap at Omega - unjustified?
-        url: blogs/magna
+        url: blogs/omega
       - image: climate_change.jpg
         subtitle: Beginner-friendly Level
         title: Believing in Global Warming - does it depend on your political views? 
-        url: blogs/tempus
+        url: blogs/climate
       - image: festival.jpg
         subtitle: Beginner-friendly Level
         title: Where Do People Drink The Most Beer, Wine And Spirits?
